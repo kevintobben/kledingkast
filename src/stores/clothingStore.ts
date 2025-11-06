@@ -3,6 +3,9 @@ import { persist } from 'zustand/middleware'
 
 interface ClothingItem {
   id: string
+  images: string[] & {
+    thumbnail: string
+  }
   name: string
   category: 'shirt' | 'pants' | 'shoes' | 'accessory'
   imageUrl: string // of base64
