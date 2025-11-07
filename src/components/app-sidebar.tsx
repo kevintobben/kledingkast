@@ -1,9 +1,9 @@
-// import {
-//   HomeIcon,
-//   Shirt,
-//   Layers,
-//   Settings,
-// } from "lucide-react"
+import {
+  HomeIcon,
+  Shirt,
+  Layers,
+  Settings,
+} from "lucide-react"
 
 import type { ComponentType } from 'react'
 
@@ -23,24 +23,24 @@ import { Link } from '@tanstack/react-router'
 // Sidebar menu items
 const items: { title: string; to: string; icon?: ComponentType<{ size?: number }> }[] = [
   {
-    title: "Overzicht",
+    title: "Home",
     to: "/",
-    // icon: HomeIcon,
+    icon: HomeIcon,
+  },
+  {
+    title: "Kledingkast",
+    to: "/wardrobe",
+    icon: Shirt,
   },
   {
     title: "Outfits",
     to: "/outfits",
-    // icon: Shirt,
-  },
-  {
-    title: "Collecties",
-    to: "/collecties",
-    // icon: Layers,
+    icon: Layers,
   },
   {
     title: "Instellingen",
     to: "/instellingen",
-    // icon: Settings,
+    icon: Settings,
   },
 ]
 
