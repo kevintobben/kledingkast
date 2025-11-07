@@ -35,7 +35,7 @@ function WardrobePage() {
               <img 
                 src={item.images.thumbnail} 
                 alt={item.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
               <div className="absolute inset-x-0 bottom-0 from-black/60 to-transparent p-3 flex justify-between items-center">
                 <p className="text-white text-sm font-medium truncate">
