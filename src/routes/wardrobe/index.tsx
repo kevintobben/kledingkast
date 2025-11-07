@@ -14,21 +14,21 @@ function WardrobePage() {
 
   return (
     <>
-      {/* Background content - blijft zichtbaar onder modal */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Mijn Kledingkast</h1>
-          
-          <Button 
-            onClick={() => navigate({ to: '/wardrobe/toevoegen' })}
-            size="lg"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Item Toevoegen
-          </Button>
+          {/* Toon de + knop alleen als er items zijn */}
+          {items.length > 0 && (
+            <Button 
+              onClick={() => navigate({ to: '/wardrobe/toevoegen' })}
+              size="lg"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Item Toevoegen
+            </Button>
+          )}
         </div>
 
-        {/* Grid met items */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {items.map((item) => (
             <button
@@ -37,7 +37,7 @@ function WardrobePage() {
               className="group relative aspect-square rounded-lg overflow-hidden border hover:border-primary transition-colors"
             >
               <img 
-                // src={item.images.thumbnail} 
+                src={item.images.thumbnail} 
                 alt={item.name}
                 className="w-full h-full object-cover"
               />
@@ -50,6 +50,7 @@ function WardrobePage() {
           ))}
         </div>
 
+        {/* Toon de "Voeg je eerste item toe" alleen als er geen items zijn */}
         {items.length === 0 && (
           <div className="text-center py-20 text-muted-foreground">
             <p className="mb-4">Je hebt nog geen items toegevoegd</p>
@@ -60,7 +61,6 @@ function WardrobePage() {
         )}
       </div>
 
-      {/* Modal outlet - hier renderen child routes */}
       <Outlet />
     </>
   )

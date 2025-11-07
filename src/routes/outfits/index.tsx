@@ -16,15 +16,17 @@ function OutfitsPage() {
       {/* Background content - blijft zichtbaar onder modal */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Mijn outfits</h1>
-          
-          <Button 
-            onClick={() => navigate({ to: '/outfits/nieuw' })}
-            size="lg"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Outfit Toevoegen
-          </Button>
+          <h1 className="text-3xl font-bold">Mijn Outfits</h1>
+          {/* Toon de + knop alleen als er items zijn */}
+          {items.length > 0 && (
+            <Button 
+              onClick={() => navigate({ to: '/outfits/nieuw' })}
+              size="lg"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Item Toevoegen
+            </Button>
+          )}
         </div>
 
         {/* Grid met items */}
