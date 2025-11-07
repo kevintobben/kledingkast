@@ -1,14 +1,22 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/instellingen')({
-  component: Instellingen,
+  component: InstellingenPage,
 })
+function InstellingenPage() {
 
-function Instellingen() {
   return (
-    <div className="p-2">
-      <h3>Instellingen</h3>
-      <p>Hier kun je je instellingen aanpassen.</p>
-    </div>
+    <>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Mijn Instellingen</h1>
+        </div>
+      </div>
+
+
+
+      {/* Modal outlet - hier renderen child routes */}
+      <Outlet />
+    </>
   )
 }
