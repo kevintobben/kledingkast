@@ -31,22 +31,25 @@ function WardrobePage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {items.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => navigate({ to: '/wardrobe/item/$itemId', params: { itemId: item.id } })}
-              className="group relative aspect-square rounded-lg overflow-hidden border hover:border-primary transition-colors"
-            >
+            <div key={item.id} className="group relative aspect-square rounded-lg overflow-hidden border hover:border-primary transition-colors">
               <img 
                 src={item.images.thumbnail} 
                 alt={item.name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-x-0 bottom-0 from-black/60 to-transparent p-3">
+              <div className="absolute inset-x-0 bottom-0 from-black/60 to-transparent p-3 flex justify-between items-center">
                 <p className="text-white text-sm font-medium truncate">
-                  {item.name}
+                  {/* {item.name} */}
                 </p>
+                {/* <Button
+                  onClick={() => useClothingStore.getState().removeItem(item.id)}
+                  className="ml-2 text-xs text-red-600 bg-transparent hover:bg-red-100"
+                  title="Verwijder item"
+                >
+                  <Trash />
+                </Button> */}
               </div>
-            </button>
+            </div>
           ))}
         </div>
 

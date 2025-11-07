@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-interface ClothingItem {
+interface outfitItem {
   id: string
   images: string[] & {
     thumbnail: string
@@ -13,19 +13,19 @@ interface ClothingItem {
   size: string
   style: string
   material: string
-  imageUrl: string // of base64
+  imageUrl: string
   color: string
   season: string[]
 }
 
-interface ClothingStore {
-  items: ClothingItem[]
-  addItem: (item: ClothingItem) => void
+interface outfitStore {
+  items: outfitItem[]
+  addItem: (item: outfitItem) => void
   removeItem: (id: string) => void
-  updateItem: (id: string, item: Partial<ClothingItem>) => void
+  updateItem: (id: string, item: Partial<outfitItem>) => void
 }
 
-export const useClothingStore = create<ClothingStore>()(
+export const useOutfitStore = create<outfitStore>()(
   persist(
     (set) => ({
       items: [],
@@ -40,7 +40,7 @@ export const useClothingStore = create<ClothingStore>()(
       }))
     }),
     {
-      name: 'clothing-storage',
+      name: 'outfit-storage',
     }
   )
 )

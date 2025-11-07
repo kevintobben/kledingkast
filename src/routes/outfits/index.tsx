@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
-import { useClothingStore } from '@/stores/clothingStore'
+import { useOutfitStore } from '@/stores/outfitStore'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute('/outfits/')({
 
 function OutfitsPage() {
   const navigate = useNavigate()
-  const items = useClothingStore((state) => state.items)
+  const items = useOutfitStore((state) => state.items)
 
   return (
     <>
@@ -34,7 +34,7 @@ function OutfitsPage() {
           {items.map((item) => (
             <button
               key={item.id}
-              onClick={() => navigate({ to: '/wardrobe/item/$itemId', params: { itemId: item.id } })}
+              onClick={() => navigate({ to: '/outfits/$outfitsId', params: { outfitsId: item.id } })}
               className="group relative aspect-square rounded-lg overflow-hidden border hover:border-primary transition-colors"
             >
               <img 
