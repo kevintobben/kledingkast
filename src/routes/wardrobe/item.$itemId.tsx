@@ -146,20 +146,20 @@ function RouteComponent() {
 
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Foto links */}
-        <div className="kleding-foto space-y-4">
-          <div className="aspect-square rounded-lg overflow-hidden border">
+        <div className="kleding-foto space-y-4 col-span-1">
+          <div className="h-96 w-full flex items-center justify-center overflow-hidden">
             <img
               src={item.images.thumbnail}
               alt={item.name}
-              className="w-full h-full object-contain"
+              className="h-full object-contain"
             />
           </div>
         </div>
 
         {/* Details rechts */}
-        <div className="kleding-details-container space-y-6">
+        <div className="kleding-details-container space-y-6 col-span-2">
           {!isEditing ? (
             <>
               <div>
