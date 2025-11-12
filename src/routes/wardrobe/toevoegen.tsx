@@ -18,8 +18,6 @@ export const Route = createFileRoute('/wardrobe/toevoegen')({
   component: AddItemModal,
 })
 
-
-
 function AddItemModal() {
   const navigate = useNavigate()
   const addItem = useClothingStore((state) => state.addItem)
