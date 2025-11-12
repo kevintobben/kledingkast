@@ -1,7 +1,10 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useClothingStore } from '@/stores/clothingStore'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Trash, Pencil } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { ArrowLeft, Trash, Pencil, X, Check } from 'lucide-react'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/wardrobe/item/$itemId')({
   component: RouteComponent,
@@ -21,6 +24,18 @@ function RouteComponent() {
 
   const item = items.find(i => i.id === itemId)
 
+  const [isEditing, setIsEditing] = useState(false)
+  const [editForm, setEditForm] = useState({
+    name: item?.name || '',
+    category: item?.category || '',
+    subcategory: item?.subcategory || '',
+    brand: item?.brand || '',
+    size: item?.size || '',
+    style: item?.style || '',
+    color: item?.color || '',
+    material: item?.material || '',
+  })
+
   if (!item) {
     return (
       <div className="text-center py-20">
@@ -33,10 +48,36 @@ function RouteComponent() {
   }
 
   const handleEdit = () => {
-    if (confirm(`Weet je zeker dat je "${item.name}" wilt bewerken?`)) {
-      updateItem(itemId, item)
-      navigate({ to: `/wardrobe/item/${itemId}` })  // Navigeer terug naar het item na bewerken
-    }
+    setIsEditing(true)
+    setEditForm({
+      name: item.name,
+      category: item.category,
+      subcategory: item.subcategory,
+      brand: item.brand,
+      size: item.size,
+      style: item.style,
+      color: item.color,
+      material: item.material,
+    })
+  }
+
+  const handleSave = () => {
+    updateItem(itemId, editForm)
+    setIsEditing(false)
+  }
+
+  const handleCancel = () => {
+    setIsEditing(false)
+    setEditForm({
+      name: item.name,
+      category: item.category,
+      subcategory: item.subcategory,
+      brand: item.brand,
+      size: item.size,
+      style: item.style,
+      color: item.color,
+      material: item.material,
+    })
   }
 
   const handleDelete = () => {
@@ -61,25 +102,47 @@ function RouteComponent() {
           </Button>
         </div>
 
-        <div className='flex justify-between gap-4'>
-          <Button
-            variant="default"
-            onClick={handleEdit}
-            className="w-auto"
-          >
-            <Pencil className="mr-2 h-4 w-4" />
-              Bewerk item
-          </Button>
-                
-          <Button
-            variant="destructive"
-            onClick={handleDelete}
-            className="w-auto"
-          >
-            <Trash className="mr-2 h-4 w-4" />
-              Verwijder item
-          </Button>
-        </div>
+        {!isEditing ? (
+          <div className='flex justify-between gap-4'>
+            <Button
+              variant="default"
+              onClick={handleEdit}
+              className="w-auto"
+            >
+              <Pencil className="mr-2 h-4 w-4" />
+                Bewerk item
+            </Button>
+
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              className="w-auto"
+            >
+              <Trash className="mr-2 h-4 w-4" />
+                Verwijder item
+            </Button>
+          </div>
+        ) : (
+          <div className='flex justify-between gap-4'>
+            <Button
+              variant="outline"
+              onClick={handleCancel}
+              className="w-auto"
+            >
+              <X className="mr-2 h-4 w-4" />
+                Annuleren
+            </Button>
+
+            <Button
+              variant="default"
+              onClick={handleSave}
+              className="w-auto"
+            >
+              <Check className="mr-2 h-4 w-4" />
+                Opslaan
+            </Button>
+          </div>
+        )}
 
       </div>
 
@@ -97,64 +160,143 @@ function RouteComponent() {
 
         {/* Details rechts */}
         <div className="kleding-details-container space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">{item.name}</h1>
-            {item.brand && (
-              <p className="text-lg text-muted-foreground">{item.brand}</p>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {item.category && (
+          {!isEditing ? (
+            <>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Categorie</p>
-                <p className="text-base capitalize">{item.category}</p>
+                <h1 className="text-3xl font-bold mb-2">{item.name}</h1>
+                {item.brand && (
+                  <p className="text-lg text-muted-foreground">{item.brand}</p>
+                )}
               </div>
-            )}
 
-            {item.subcategory && (
+              <div className="grid grid-cols-2 gap-4">
+                {item.category && (
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Categorie</p>
+                    <p className="text-base capitalize">{item.category}</p>
+                  </div>
+                )}
+
+                {item.subcategory && (
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Subcategorie</p>
+                    <p className="text-base capitalize">{item.subcategory}</p>
+                  </div>
+                )}
+
+                {item.size && (
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Maat</p>
+                    <p className="text-base">{item.size}</p>
+                  </div>
+                )}
+
+                {item.color && (
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Kleur</p>
+                    <p className="text-base capitalize">{item.color}</p>
+                  </div>
+                )}
+
+                {item.style && (
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Stijl</p>
+                    <p className="text-base capitalize">{item.style}</p>
+                  </div>
+                )}
+
+                {item.material && (
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Materiaal</p>
+                    <p className="text-base capitalize">{item.material}</p>
+                  </div>
+                )}
+              </div>
+
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Subcategorie</p>
-                <p className="text-base capitalize">{item.subcategory}</p>
+                <h2 className="text-2xl font-semibold mb-2">Outfits met dit item</h2>
+                <p className="text-base text-muted-foreground">Deze functionaliteit is nog in ontwikkeling.</p>
+                <div className="flex flex-wrap gap-2">
+                  {/* Hier komen de outfits waarin dit item voorkomt */}
+                </div>
               </div>
-            )}
-
-            {item.size && (
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Maat</p>
-                <p className="text-base">{item.size}</p>
+            </>
+          ) : (
+            <div className="space-y-4">
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-name">Naam item</Label>
+                <Input
+                  id="edit-name"
+                  value={editForm.name}
+                  onChange={e => setEditForm({...editForm, name: e.target.value})}
+                  placeholder="Bijv. T-shirt"
+                />
               </div>
-            )}
-
-            {item.color && (
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Kleur</p>
-                <p className="text-base capitalize">{item.color}</p>
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-category">Categorie</Label>
+                <Input
+                  id="edit-category"
+                  value={editForm.category}
+                  onChange={e => setEditForm({...editForm, category: e.target.value})}
+                  placeholder="Bijv. sweaters"
+                />
               </div>
-            )}
-
-            {item.style && (
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Stijl</p>
-                <p className="text-base capitalize">{item.style}</p>
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-subcategory">Subcategorie / Type</Label>
+                <Input
+                  id="edit-subcategory"
+                  value={editForm.subcategory}
+                  onChange={e => setEditForm({...editForm, subcategory: e.target.value})}
+                  placeholder="Bijv. crewneck"
+                />
               </div>
-            )}
-
-            {item.material && (
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Materiaal</p>
-                <p className="text-base capitalize">{item.material}</p>
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-brand">Merk</Label>
+                <Input
+                  id="edit-brand"
+                  value={editForm.brand}
+                  onChange={e => setEditForm({...editForm, brand: e.target.value})}
+                  placeholder="Bijv. Avirex"
+                />
               </div>
-            )}
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-2">Outfits met dit item</h2>
-            <p className="text-base text-muted-foreground">Deze functionaliteit is nog in ontwikkeling.</p>
-            <div className="flex flex-wrap gap-2">
-              {/* Hier komen de outfits waarin dit item voorkomt */}
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-size">Maat</Label>
+                <Input
+                  id="edit-size"
+                  value={editForm.size}
+                  onChange={e => setEditForm({...editForm, size: e.target.value})}
+                  placeholder="Bijv. M"
+                />
+              </div>
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-style">Style</Label>
+                <Input
+                  id="edit-style"
+                  value={editForm.style}
+                  onChange={e => setEditForm({...editForm, style: e.target.value})}
+                  placeholder="Bijv. casual"
+                />
+              </div>
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-color">Kleur</Label>
+                <Input
+                  id="edit-color"
+                  value={editForm.color}
+                  onChange={e => setEditForm({...editForm, color: e.target.value})}
+                  placeholder="Bijv. blauw"
+                />
+              </div>
+              <div className="grid w-full gap-3">
+                <Label htmlFor="edit-material">Materiaal</Label>
+                <Input
+                  id="edit-material"
+                  value={editForm.material}
+                  onChange={e => setEditForm({...editForm, material: e.target.value})}
+                  placeholder="Bijv. katoen"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
       </div>
