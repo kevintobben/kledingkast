@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useClothingStore } from '@/stores/clothingStore'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Trash } from 'lucide-react'
+import { ArrowLeft, Trash, Pencil } from 'lucide-react'
 
 export const Route = createFileRoute('/wardrobe/item/$itemId')({
   component: RouteComponent,
@@ -17,6 +17,7 @@ function RouteComponent() {
   const navigate = useNavigate()
   const items = useClothingStore((state) => state.items)
   const removeItem = useClothingStore((state) => state.removeItem)
+  const updateItem = useClothingStore((state) => state.updateItem)
 
   const item = items.find(i => i.id === itemId)
 
@@ -31,6 +32,13 @@ function RouteComponent() {
     )
   }
 
+  const handleEdit = () => {
+    if (confirm(`Weet je zeker dat je "${item.name}" wilt bewerken?`)) {
+      updateItem(itemId, item)
+      navigate({ to: `/wardrobe/item/${itemId}` })  // Navigeer terug naar het item na bewerken
+    }
+  }
+
   const handleDelete = () => {
     if (confirm(`Weet je zeker dat je "${item.name}" wilt verwijderen?`)) {
       removeItem(itemId)
@@ -39,19 +47,45 @@ function RouteComponent() {
   }
 
   return (
-    <div className="space-y-6">
-      <Button
-        variant="ghost"
-        onClick={() => navigate({ to: '/wardrobe' })}
-        className="mb-4"
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Terug naar kledingkast
-      </Button>
+    <div className="kleding-info-container space-y-6">
+      <div className="flex items-center">
+
+        <div className='grow'>
+          <Button
+            variant="ghost"
+            onClick={() => navigate({ to: '/wardrobe' })}
+            className="mb-4"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Terug naar kledingkast
+          </Button>
+        </div>
+
+        <div className='flex justify-between gap-4'>
+          <Button
+            variant="default"
+            onClick={handleEdit}
+            className="w-auto"
+          >
+            <Pencil className="mr-2 h-4 w-4" />
+              Bewerk item
+          </Button>
+                
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            className="w-auto"
+          >
+            <Trash className="mr-2 h-4 w-4" />
+              Verwijder item
+          </Button>
+        </div>
+
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Foto links */}
-        <div className="space-y-4">
+        <div className="kleding-foto space-y-4">
           <div className="aspect-square rounded-lg overflow-hidden border">
             <img
               src={item.images.thumbnail}
@@ -59,18 +93,10 @@ function RouteComponent() {
               className="w-full h-full object-contain"
             />
           </div>
-          <Button
-            variant="destructive"
-            onClick={handleDelete}
-            className="w-full"
-          >
-            <Trash className="mr-2 h-4 w-4" />
-            Verwijder item
-          </Button>
         </div>
 
         {/* Details rechts */}
-        <div className="space-y-6">
+        <div className="kleding-details-container space-y-6">
           <div>
             <h1 className="text-3xl font-bold mb-2">{item.name}</h1>
             {item.brand && (
@@ -120,14 +146,16 @@ function RouteComponent() {
                 <p className="text-base capitalize">{item.material}</p>
               </div>
             )}
-
-            {item.season && item.season.length > 0 && (
-              <div className="col-span-2">
-                <p className="text-sm font-medium text-muted-foreground">Seizoen</p>
-                <p className="text-base capitalize">{item.season.join(', ')}</p>
-              </div>
-            )}
           </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold mb-2">Outfits met dit item</h2>
+            <p className="text-base text-muted-foreground">Deze functionaliteit is nog in ontwikkeling.</p>
+            <div className="flex flex-wrap gap-2">
+              {/* Hier komen de outfits waarin dit item voorkomt */}
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
