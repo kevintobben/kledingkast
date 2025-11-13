@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as InstellingenRouteImport } from './routes/instellingen'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WardrobeIndexRouteImport } from './routes/wardrobe/index'
@@ -18,6 +19,11 @@ import { Route as OutfitsNieuwRouteImport } from './routes/outfits/nieuw'
 import { Route as OutfitsOutfitsIdRouteImport } from './routes/outfits/$outfitsId'
 import { Route as WardrobeItemItemIdRouteImport } from './routes/wardrobe/item.$itemId'
 
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InstellingenRoute = InstellingenRouteImport.update({
   id: '/instellingen',
   path: '/instellingen',
@@ -62,6 +68,7 @@ const WardrobeItemItemIdRoute = WardrobeItemItemIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/instellingen': typeof InstellingenRoute
+  '/wishlist': typeof WishlistRoute
   '/outfits/$outfitsId': typeof OutfitsOutfitsIdRoute
   '/outfits/nieuw': typeof OutfitsNieuwRoute
   '/wardrobe/toevoegen': typeof WardrobeToevoegenRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/instellingen': typeof InstellingenRoute
+  '/wishlist': typeof WishlistRoute
   '/outfits/$outfitsId': typeof OutfitsOutfitsIdRoute
   '/outfits/nieuw': typeof OutfitsNieuwRoute
   '/wardrobe/toevoegen': typeof WardrobeToevoegenRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/instellingen': typeof InstellingenRoute
+  '/wishlist': typeof WishlistRoute
   '/outfits/$outfitsId': typeof OutfitsOutfitsIdRoute
   '/outfits/nieuw': typeof OutfitsNieuwRoute
   '/wardrobe/toevoegen': typeof WardrobeToevoegenRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/instellingen'
+    | '/wishlist'
     | '/outfits/$outfitsId'
     | '/outfits/nieuw'
     | '/wardrobe/toevoegen'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/instellingen'
+    | '/wishlist'
     | '/outfits/$outfitsId'
     | '/outfits/nieuw'
     | '/wardrobe/toevoegen'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/instellingen'
+    | '/wishlist'
     | '/outfits/$outfitsId'
     | '/outfits/nieuw'
     | '/wardrobe/toevoegen'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   InstellingenRoute: typeof InstellingenRoute
+  WishlistRoute: typeof WishlistRoute
   OutfitsOutfitsIdRoute: typeof OutfitsOutfitsIdRoute
   OutfitsNieuwRoute: typeof OutfitsNieuwRoute
   WardrobeToevoegenRoute: typeof WardrobeToevoegenRoute
@@ -136,6 +149,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/instellingen': {
       id: '/instellingen'
       path: '/instellingen'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   InstellingenRoute: InstellingenRoute,
+  WishlistRoute: WishlistRoute,
   OutfitsOutfitsIdRoute: OutfitsOutfitsIdRoute,
   OutfitsNieuwRoute: OutfitsNieuwRoute,
   WardrobeToevoegenRoute: WardrobeToevoegenRoute,

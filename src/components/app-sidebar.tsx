@@ -2,6 +2,7 @@ import {
   HomeIcon,
   Shirt,
   Layers,
+  BaggageClaim,
   Settings,
 } from "lucide-react"
 
@@ -36,6 +37,11 @@ const items: { title: string; to: string; icon?: ComponentType<{ size?: number }
     title: "Outfits",
     to: "/outfits",
     icon: Layers,
+  },
+  {
+    title: "Wishlist",
+    to: "/wishlist",
+    icon: BaggageClaim,
   },
   {
     title: "Instellingen",

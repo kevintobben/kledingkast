@@ -46,6 +46,11 @@ const RootLayout = () => (
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                       <NavigationMenuLink asChild>
+                      <Link to="/wishlist" className="[&.active]:font-semibold [&.active]:text-primary [&.active]:underline">Wishlist</Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                      <NavigationMenuLink asChild>
                       <Link to="/instellingen" className="[&.active]:font-semibold [&.active]:text-primary [&.active]:underline">Instellingen</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
@@ -82,6 +87,12 @@ const RootLayout = () => (
                           className="py-2 [&.active]:font-semibold [&.active]:text-primary [&.active]:underline"
                         >
                           Outfits
+                        </Link>
+                        <Link
+                          to="/wishlist"
+                          className="py-2 [&.active]:font-semibold [&.active]:text-primary [&.active]:underline"
+                        >
+                          Wishlist
                         </Link>
                         <Link
                           to="/instellingen"

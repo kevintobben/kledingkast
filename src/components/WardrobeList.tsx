@@ -60,18 +60,25 @@ export function WardrobeList() {
             {grouped[category].map((item) => (
               <div
                 key={item.id}
-                className="group relative aspect-square rounded-lg overflow-hidden border hover:border-primary transition-colors cursor-pointer"
+                className="group cursor-pointer"
                 onClick={() => navigate({ to: '/wardrobe/item/$itemId', params: { itemId: item.id } })}
               >
-                <img
-                  src={item.images.thumbnail}
-                  alt={item.name}
-                  className="w-full h-full object-contain"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/60 to-transparent p-3">
-                  <p className="text-white text-sm font-medium truncate">
+                <div className="aspect-square rounded-lg overflow-hidden border mb-2">
+                  <img
+                    src={item.images.thumbnail}
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-md font-semibold truncate">
                     {item.name}
                   </p>
+                  {item.brand && (
+                    <p className="text-sm tracking-wide truncate">
+                      {item.brand}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}

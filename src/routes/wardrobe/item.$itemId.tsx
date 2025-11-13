@@ -88,7 +88,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="kleding-info-container space-y-6">
+    <div className="item-container space-y-6">
       <div className="flex items-center">
 
         <div className='grow'>
@@ -147,8 +147,7 @@ function RouteComponent() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Foto links */}
-        <div className="kleding-foto space-y-4 col-span-1">
+        <div className="item-foto-container space-y-4 col-span-1">
           <div className="h-96 w-full flex items-center justify-center overflow-hidden">
             <img
               src={item.images.thumbnail}
@@ -159,16 +158,9 @@ function RouteComponent() {
         </div>
 
         {/* Details rechts */}
-        <div className="kleding-details-container space-y-6 col-span-2">
+        <div className="item-details-container space-y-6 col-span-2">
           {!isEditing ? (
             <>
-              <div>
-                <h1 className="text-3xl font-bold mb-2">{item.name}</h1>
-                {item.brand && (
-                  <p className="text-lg text-muted-foreground">{item.brand}</p>
-                )}
-              </div>
-
               <div className="grid grid-cols-2 gap-4">
                 {item.category && (
                   <div>
@@ -211,14 +203,6 @@ function RouteComponent() {
                     <p className="text-base capitalize">{item.material}</p>
                   </div>
                 )}
-              </div>
-
-              <div>
-                <h2 className="text-2xl font-semibold mb-2">Outfits met dit item</h2>
-                <p className="text-base text-muted-foreground">Deze functionaliteit is nog in ontwikkeling.</p>
-                <div className="flex flex-wrap gap-2">
-                  {/* Hier komen de outfits waarin dit item voorkomt */}
-                </div>
               </div>
             </>
           ) : (
@@ -300,6 +284,33 @@ function RouteComponent() {
 
         </div>
       </div>
+
+      <div className='item-outfits-container'>
+
+        <h2 className="text-2xl font-semibold mb-4">Outfits met dit item</h2>
+        <p className="text-base text-muted-foreground">Deze functionaliteit is nog in ontwikkeling.</p>
+        {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div
+            key={item.id}
+            className="group cursor-pointer"
+          >
+            <div className="outfit-img-container rounded-lg overflow-hidden" style={{ height: '400px' }}>
+              <img
+                src={item.images.thumbnail}
+                alt={item.name}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="outfit-name">
+              <p className="text-md font-medium">
+                {item.name}
+              </p>
+            </div>
+          </div>
+        </div> */}
+
+      </div>
+
     </div>
   )
 }

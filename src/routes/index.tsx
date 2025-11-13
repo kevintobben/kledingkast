@@ -24,6 +24,12 @@ function Index() {
         >
           Naar Outfits
         </Link>
+        <Link 
+          to="/wishlist" 
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg"
+        >
+          Naar Wishlist
+        </Link>
       </div>
     </div>
   )
